@@ -9,7 +9,25 @@
 
 ## Description
 
+Building a simple coffee App with nestjs.
 
+
+To create a new controller with nestjs cli
+```bash
+nest generate controller
+
+# short form
+nest g co
+
+```
+
+To create a new service with nestjs cli
+```bash
+nest generate service 
+
+# short form
+nest g s
+```
 
 ## Installation
 
