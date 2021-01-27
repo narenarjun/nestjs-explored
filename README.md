@@ -62,5 +62,26 @@ $ yarn run test:cov
 ```
 
 
+#### TypeOrm Module 
 
+when connecting to `heroku-postgresql` from localhost via nestjs TypeOrm module,
+the connection will be rejected if `ssl:true` option is not passed and it'll reject 
+connection for self signed certificated too.
+so, to avoid these issues add ssl `rejectUnauthorized` to `false`
 
+```json
+{
+  "name": "default",
+  "type": "postgres",
+  "url": "postgres://username:password@host:port/database",
+  "synchronize": true,
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  }
+}
+```
+
+<!-- https://stackoverflow.com/questions/56660312/cannot-connect-an-ssl-secured-database-to-typeorm -->
