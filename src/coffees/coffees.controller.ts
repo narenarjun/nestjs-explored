@@ -20,14 +20,14 @@ export class CoffeesController {
 
   @Public()
   @Get()
-  async findAll(@Query() paginationQuery: PaginationQueryDto) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
     // const { limit, offset } = paginationQuery;
     return this.coffeeService.findAll(paginationQuery);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    // console.log(id);
     return this.coffeeService.findOne(id);
   }
 
