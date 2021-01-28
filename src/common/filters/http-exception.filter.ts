@@ -20,7 +20,8 @@ export class HttpExceptionFilter<T extends HttpException>
     const error =
       typeof response === 'string'
         ? { message: exceptionResponse }
-        : (exceptionResponse as object);
+        : // eslint-disable-next-line @typescript-eslint/ban-types
+          (exceptionResponse as object);
 
     response.status(status).json({
       ...error,
