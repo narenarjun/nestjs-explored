@@ -3,21 +3,31 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        //# using Joi package to check all environment variables are present , this will avoid unnecessary errors in prod
+        DATABASE_CONNECTION_URL: Joi.required(),
+      }),
+    }),
     CoffeesModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      url: 'postgres:/yourdataurlvalue',
-      ssl: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        url: process.env.DATABASE_CONNECTION_URL,
+        ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
         },
-      },
-      autoLoadEntities: true,
-      synchronize: true, //! this should be disabled when deploying to prod,but it's great for development
+        autoLoadEntities: true,
+        synchronize: true, //! this should be disabled when deploying to prod,but it's great for development
+      }),
     }),
   ],
   controllers: [AppController],
