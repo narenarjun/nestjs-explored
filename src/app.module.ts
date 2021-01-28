@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CommonModule } from './common/common.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -29,6 +30,7 @@ import * as Joi from '@hapi/joi';
         synchronize: true, //! this should be disabled when deploying to prod,but it's great for development
       }),
     }),
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
